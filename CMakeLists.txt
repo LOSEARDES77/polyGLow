@@ -24,4 +24,8 @@ target_link_libraries(polyGLow glfw)
 find_package(OpenGL REQUIRED)
 target_link_libraries(polyGLow OpenGL::GL)
 
+# Find and link GLEW
+find_package(GLEW REQUIRED)
+target_link_libraries(polyGLow GLEW::GLEW)
+
 
