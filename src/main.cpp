@@ -175,8 +175,36 @@ int main()
   // Make the window's context current
   glfwMakeContextCurrent(window);
 
-  while (!glfwWindowShouldClose(window)) {
-	glfwPollEvents();
+  // Initialize GLEW
+  glewExperimental = GL_TRUE;
+  if (glewInit() != GLEW_OK)
+  {
+    std::cerr << "Failed to initialize GLEW" << std::endl;
+    return -1;
+  }
+
+  // Set the key callback
+  glfwSetKeyCallback(window, key_callback);
+
+  WindowColors wc = {1.0f, 0.0f, 0.0f};
+
+  // Main loop
+  while (!glfwWindowShouldClose(window))
+  {
+    // Render here
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    glClearColor(wc.red, wc.green, wc.blue, 1.0f);
+
+    updateColors(&wc);
+
+    // Swap front and back buffers
+    glfwSwapBuffers(window);
+
+    // Poll for and process events
+    glfwPollEvents();
+
+    usleep(16000);
   }
 
   glfwDestroyWindow(window);
